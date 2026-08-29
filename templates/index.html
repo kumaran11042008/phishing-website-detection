@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phishing Website Detection System</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="#">
+            <i class="bi bi-shield-lock-fill"></i>
+            Phishing Detector
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+
+    <a class="nav-link" href="/history">
+
+        <i class="bi bi-clock-history"></i>
+
+        History
+
+    </a>
+
+</li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero py-5">
+
+<div class="container">
+
+<div class="row align-items-center">
+
+<div class="col-lg-6">
+
+<h1 class="display-4 fw-bold">
+
+Phishing Website Detection System
+
+</h1>
+
+<p class="lead mt-4">
+
+Detect phishing websites using Artificial Intelligence and Machine Learning.
+Analyze URLs instantly and protect yourself from phishing attacks.
+
+</p>
+
+<!-- ================= URL FORM ================= -->
+
+<form method="POST">
+
+<div class="input-group mt-4">
+
+<input
+
+type="text"
+
+name="url"
+
+class="form-control form-control-lg"
+
+placeholder="Enter Website URL"
+
+value="{{ url }}"
+
+required>
+
+<button
+
+type="submit"
+
+class="btn btn-primary btn-lg">
+
+<i class="bi bi-search"></i>
+
+Check Website
+
+</button>
+
+</div>
+
+</form>
+
+<!-- ================= RESULT ================= -->
+
+{% if result %}
+
+<div class="card shadow-lg mt-4">
+
+<div class="card-header bg-dark text-white">
+
+<h3 class="text-center">
+
+🛡 Website Security Report
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<table class="table table-hover">
+
+<tr>
+
+<th width="220">
+
+🌐 Website
+
+</th>
+
+<td>
+
+{{ url }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+🟢 Prediction
+
+</th>
+
+<td>
+
+{% if result.prediction=="Legitimate Website" %}
+
+<span class="badge bg-success fs-6">
+
+{{ result.prediction }}
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger fs-6">
+
+{{ result.prediction }}
+
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+    <th>
+
+        📊 Confidence
+
+    </th>
+
+    <td>
+
+        <strong>{{ result.confidence }}%</strong>
+
+        <div class="progress mt-2" style="height:25px;">
+
+            <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width: {{ result.confidence }}%;"
+                aria-valuenow="{{ result.confidence }}"
+                aria-valuemin="0"
+                aria-valuemax="100">
+
+                {{ result.confidence }}%
+
+            </div>
+
+        </div>
+
+    </td>
+
+</tr>
+
+<tr>
+
+<th>
+
+⚠ Risk Level
+
+</th>
+
+<!-- Risk Score -->
+<tr>
+    <th>🎯 Risk Score</th>
+    <td>
+
+        <div class="progress" style="height: 25px;">
+
+            <div
+                class="progress-bar bg-danger"
+                role="progressbar"
+                style="width: {{ result.risk_score }}%;"
+                aria-valuenow="{{ result.risk_score }}"
+                aria-valuemin="0"
+                aria-valuemax="100">
+
+                {{ result.risk_score }} / 100
+
+            </div>
+
+        </div>
+
+    </td>
+</tr>
+
+<!-- Risk Reasons -->
+<tr>
+    <th>🔍 Security Analysis</th>
+
+    <td>
+
+        {% if result.reasons %}
+
+            <ul class="mb-0">
+
+                {% for reason in result.reasons %}
+
+                    <li class="text-danger mb-2">
+                        ⚠️ {{ reason }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <span class="text-success">
+                ✅ No major suspicious indicators detected.
+            </span>
+
+        {% endif %}
+
+    </td>
+
+</tr>
+
+<td>
+
+{% if result.risk=="Low" %}
+
+<div class="alert alert-success mb-0">
+
+🟢 Low Risk Website
+
+</div>
+
+{% else %}
+
+<div class="alert alert-danger mb-0">
+
+🔴 High Risk Website
+
+</div>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+🕒 Scan Time
+
+</th>
+
+<td>
+
+{{ result.scan_time }} seconds
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+
+<div class="col-lg-6 text-center">
+
+<img
+
+src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
+
+class="img-fluid hero-image"
+
+alt="Cyber Security">
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= SECURITY DASHBOARD ================= -->
+
+<section class="dashboard-section py-5">
+
+    <div class="container">
+
+        <h2 class="text-center fw-bold mb-2">
+            Security Dashboard
+        </h2>
+
+        <p class="text-center text-muted mb-5">
+            Real-time phishing detection statistics
+        </p>
+
+        <div class="row g-4">
+
+            <!-- Total Scans -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+                        <i class="bi bi-search"></i>
+                    </div>
+
+                    <h6>Total Scans</h6>
+
+                   <h2>{{ stats.total_scans }}</h2>
+
+                    <p>
+                        URLs analyzed
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Safe Websites -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+
+                    <h6>Safe Websites</h6>
+
+                    <h2>{{ stats.safe_websites }}</h2>
+
+                    <p>
+                        Low-risk websites
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Phishing Websites -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+                        <i class="bi bi-shield-exclamation"></i>
+                    </div>
+
+                    <h6>Phishing Detected</h6>
+
+                    <h2>{{ stats.phishing_detected }}</h2>
+
+                    <p>
+                        Threats detected
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- High Risk -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+
+                    <h6>High Risk</h6>
+
+                    <h2>{{ stats.high_risk }}</h2>
+
+                    <p>
+                        Critical websites
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= FEATURES ================= -->
+
+<section id="features" class="py-5 bg-light">
+
+    <div class="container">
+
+        <h2 class="text-center fw-bold mb-5">
+
+            Our Features
+
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+
+                <div class="card feature-card shadow h-100">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-link-45deg display-4 text-primary"></i>
+
+                        <h4 class="mt-3">
+
+                            URL Analysis
+
+                        </h4>
+
+                        <p>
+
+                            Analyze website URLs and identify suspicious
+                            patterns commonly used by phishing websites.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card feature-card shadow h-100">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-shield-check display-4 text-success"></i>
+
+                        <h4 class="mt-3">
+
+                            AI Prediction
+
+                        </h4>
+
+                        <p>
+
+                            Random Forest Machine Learning model predicts
+                            whether a website is Legitimate or Phishing.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card feature-card shadow h-100">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-speedometer2 display-4 text-warning"></i>
+
+                        <h4 class="mt-3">
+
+                            Confidence Score
+
+                        </h4>
+
+                        <p>
+
+                            Displays prediction confidence to help users
+                            understand the reliability of the result.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card feature-card shadow h-100">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-browser-chrome display-4 text-danger"></i>
+
+                        <h4 class="mt-3">
+
+                            Browser Support
+
+                        </h4>
+
+                        <p>
+
+                            Designed to be extended into a browser extension
+                            for real-time phishing protection.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= PROJECT STATISTICS ================= -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        <h2 class="text-center fw-bold mb-5">
+
+            Dashboard Overview
+
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+
+                <div class="card text-center shadow">
+
+                    <div class="card-body">
+
+                        <i class="bi bi-globe display-4 text-primary"></i>
+
+                        <h3 class="mt-3">
+
+                            URL Scanner
+
+                        </h3>
+
+                        <p>
+
+                            Scan any website URL instantly.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card text-center shadow">
+
+                    <div class="card-body">
+
+                        <i class="bi bi-shield-lock-fill display-4 text-success"></i>
+
+                        <h3 class="mt-3">
+
+                            Secure Detection
+
+                        </h3>
+
+                        <p>
+
+                            AI-powered phishing detection using
+                            Machine Learning.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card text-center shadow">
+
+                    <div class="card-body">
+
+                        <i class="bi bi-cpu-fill display-4 text-warning"></i>
+
+                        <h3 class="mt-3">
+
+                            Random Forest
+
+                        </h3>
+
+                        <p>
+
+                            High accuracy classification model
+                            trained using phishing datasets.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card text-center shadow">
+
+                    <div class="card-body">
+
+                        <i class="bi bi-lightning-charge-fill display-4 text-danger"></i>
+
+                        <h3 class="mt-3">
+
+                            Fast Prediction
+
+                        </h3>
+
+                        <p>
+
+                            Get website security results within
+                            a few seconds.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+
+                <img
+
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+
+                class="img-fluid"
+
+                alt="About">
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <h2 class="fw-bold">
+
+                    About This Project
+
+                </h2>
+
+                <p class="mt-4">
+
+                    The Phishing Website Detection System is an
+                    Artificial Intelligence based cybersecurity
+                    application developed using Python, Flask,
+                    Scikit-learn and Random Forest.
+
+                </p>
+
+                <p>
+
+                    The system analyzes URL features and webpage
+                    characteristics to determine whether a website
+                    is legitimate or phishing. It helps users stay
+                    protected from online fraud, credential theft,
+                    and malicious websites.
+
+                </p>
+
+                <ul class="list-group list-group-flush mt-4">
+
+                    <li class="list-group-item">
+
+                        ✔ Machine Learning Based Detection
+
+                    </li>
+
+                    <li class="list-group-item">
+
+                        ✔ Real-Time URL Analysis
+
+                    </li>
+
+                    <li class="list-group-item">
+
+                        ✔ Cybersecurity Dashboard
+
+                    </li>
+
+                    <li class="list-group-item">
+
+                        ✔ Fast & Accurate Prediction
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="py-5">
+
+    <div class="container">
+
+        <h2 class="text-center fw-bold mb-5">
+
+            Contact
+
+        </h2>
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="card shadow">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-envelope-fill display-3 text-primary"></i>
+
+                        <h3 class="mt-3">
+
+                            Need Help?
+
+                        </h3>
+
+                        <p class="mt-3">
+
+                            If you have any questions or suggestions regarding
+                            the Phishing Website Detection System, feel free to
+                            contact the development team.
+
+                        </p>
+
+                        <a href="mailto:example@email.com"
+                           class="btn btn-primary">
+
+                            <i class="bi bi-envelope"></i>
+
+                            Contact Us
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-dark text-white py-4">
+
+    <div class="container text-center">
+
+        <h5>
+
+            <i class="bi bi-shield-lock-fill"></i>
+
+            Phishing Website Detection System
+
+        </h5>
+
+        <p class="mt-3">
+
+            AI Powered Cybersecurity Project using
+            Python, Flask and Machine Learning.
+
+        </p>
+
+        <hr class="bg-light">
+
+        <p class="mb-0">
+
+            © 2026 Phishing Website Detection System
+
+            <br>
+
+            Developed for Educational & Research Purpose
+
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

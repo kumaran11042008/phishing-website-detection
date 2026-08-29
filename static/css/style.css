@@ -1,0 +1,574 @@
+/* ===========================
+   GENERAL STYLING
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#081b29;
+    color:white;
+}
+
+/* ===========================
+        NAVBAR
+=========================== */
+
+.navbar{
+    background:#06131f !important;
+}
+
+.navbar-brand{
+    font-size:26px;
+    font-weight:bold;
+}
+
+.nav-link{
+    color:white !important;
+    margin-left:20px;
+    transition:.3s;
+}
+
+.nav-link:hover{
+    color:#00d9ff !important;
+}
+
+/* ===========================
+        HERO SECTION
+=========================== */
+
+.hero{
+    padding:100px 0;
+    background:linear-gradient(135deg,#081b29,#0f3d5c);
+}
+
+.hero h1{
+    font-size:55px;
+    font-weight:bold;
+}
+
+.hero p{
+    font-size:20px;
+    color:#d4d4d4;
+    margin-top:20px;
+}
+
+.hero-image{
+    width:420px;
+    animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-15px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+}
+
+/* ===========================
+        INPUT BOX
+=========================== */
+
+.form-control{
+
+    border-radius:50px;
+    padding:15px;
+    border:none;
+
+}
+
+.form-control:focus{
+
+    box-shadow:0 0 10px #00d9ff;
+
+}
+
+/* ===========================
+        BUTTON
+=========================== */
+
+.btn-primary{
+
+    border-radius:50px;
+    background:#00bcd4;
+    border:none;
+    padding:15px 30px;
+    transition:.3s;
+
+}
+
+.btn-primary:hover{
+
+    background:#0097a7;
+    transform:scale(1.05);
+
+}
+
+/* ===========================
+      FEATURES SECTION
+=========================== */
+
+#features{
+
+    background:#10273b;
+    padding:80px 0;
+
+}
+
+.feature-card{
+
+    background:#17384f;
+    color:white;
+    border:none;
+    border-radius:15px;
+    transition:.4s;
+    height:100%;
+
+}
+
+.feature-card:hover{
+
+    transform:translateY(-10px);
+    box-shadow:0 0 20px #00d9ff;
+
+}
+
+.feature-icon{
+
+    font-size:55px;
+    color:#00d9ff;
+
+}
+
+/* ===========================
+      ABOUT SECTION
+=========================== */
+
+.about-section{
+
+    padding:80px 0;
+    background:#081b29;
+
+}
+
+.about-section h2{
+
+    margin-bottom:20px;
+    font-weight:bold;
+
+}
+
+.about-section p{
+
+    font-size:18px;
+    line-height:1.8;
+
+}
+
+/* ===========================
+      FOOTER
+=========================== */
+
+footer{
+
+    background:#06131f;
+    padding:20px;
+
+}
+
+footer p{
+
+    margin:0;
+
+}
+
+/* ===========================
+        RESPONSIVE
+=========================== */
+
+@media(max-width:992px){
+
+.hero{
+
+text-align:center;
+
+}
+
+.hero-image{
+
+margin-top:40px;
+width:300px;
+
+}
+
+.hero h1{
+
+font-size:40px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.hero{
+
+padding:60px 0;
+
+}
+
+.hero h1{
+
+font-size:32px;
+
+}
+
+.hero p{
+
+font-size:17px;
+
+}
+
+.form-control{
+
+margin-bottom:10px;
+
+}
+
+.input-group{
+
+display:block;
+
+}
+
+.btn-primary{
+
+width:100%;
+
+}
+
+}
+.card{
+
+    border-radius:15px;
+
+}
+
+.card-header{
+
+    border-radius:15px 15px 0 0;
+
+}
+
+.table th{
+
+    width:220px;
+
+}
+
+.badge{
+
+    font-size:16px;
+
+    padding:8px 14px;
+
+}
+
+.progress{
+
+    border-radius:15px;
+
+}
+
+.progress-bar{
+
+    font-size:15px;
+
+    font-weight:bold;
+
+}
+
+.alert{
+
+    font-weight:bold;
+
+}
+
+.card{
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+}
+/* =========================================
+   SECURITY DASHBOARD
+========================================= */
+
+/* =========================================
+   SECURITY DASHBOARD - MODULE 9
+========================================= */
+
+.dashboard-section {
+    background: #f8f9fa;
+    padding: 70px 0;
+    color: #1f2937 !important;
+}
+
+/* Dashboard main title */
+.dashboard-section h1 {
+    color: #172b4d !important;
+    font-size: 42px;
+    font-weight: 700;
+}
+
+/* Dashboard subtitle */
+.dashboard-section > .container > div:first-child p {
+    color: #64748b !important;
+    font-size: 18px;
+}
+
+/* =========================================
+   DASHBOARD CARDS
+========================================= */
+
+.dashboard-card {
+    background: #ffffff !important;
+    color: #172b4d !important;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Dashboard card title */
+
+.dashboard-card .dashboard-title {
+    color: #64748b !important;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Dashboard numbers */
+
+.dashboard-card .dashboard-value {
+    color: #172b4d !important;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+/* Dashboard description */
+
+.dashboard-card .dashboard-description {
+    color: #64748b !important;
+    font-size: 15px;
+}
+
+/* =========================================
+   DASHBOARD HEADINGS
+========================================= */
+
+.dashboard-card h1,
+.dashboard-card h2,
+.dashboard-card h3,
+.dashboard-card h4,
+.dashboard-card h5,
+.dashboard-card h6 {
+    color: #172b4d !important;
+}
+
+/* =========================================
+   DASHBOARD PARAGRAPHS
+========================================= */
+
+.dashboard-card p {
+    color: #4b5563 !important;
+}
+
+/* =========================================
+   DASHBOARD TABLE
+========================================= */
+
+.dashboard-section table {
+    color: #1f2937 !important;
+}
+
+.dashboard-section table th {
+    color: #172b4d !important;
+    font-weight: 700;
+}
+
+.dashboard-section table td {
+    color: #374151 !important;
+}
+
+/* =========================================
+   DASHBOARD LABELS
+========================================= */
+
+.dashboard-section label {
+    color: #374151 !important;
+}
+
+/* =========================================
+   DASHBOARD HR
+========================================= */
+
+.dashboard-section hr {
+    border-color: #dee2e6;
+}
+
+/* =========================================
+   DASHBOARD ICONS
+========================================= */
+
+.dashboard-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   FORCE BOOTSTRAP TEXT-WHITE TO DARK
+   ONLY INSIDE DASHBOARD
+========================================= */
+
+.dashboard-section .text-white {
+    color: #172b4d !important;
+}
+
+/* =========================================
+   SECURITY STATUS
+========================================= */
+
+.dashboard-section .alert {
+    color: #1f2937 !important;
+}
+
+/* Keep danger alert readable */
+.dashboard-section .alert-danger {
+    color: #842029 !important;
+}
+
+/* Keep success alert readable */
+.dashboard-section .alert-success {
+    color: #0f5132 !important;
+}
+
+/* =========================================
+   FEATURES SECTION
+========================================= */
+
+.feature-card h4 {
+    color: #ffffff !important;
+}
+
+.feature-card p {
+    color: #e5e7eb !important;
+}
+
+/* =========================================
+   MODULE 10 - SCAN HISTORY
+========================================= */
+
+.history-section {
+    background: #f8f9fa;
+    min-height: 80vh;
+    color: #1f2937;
+}
+
+.history-title {
+    color: #172b4d !important;
+    font-weight: 700;
+}
+
+.history-subtitle {
+    color: #64748b !important;
+    font-size: 18px;
+}
+
+.history-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.history-card .card-header {
+    background: #172b4d;
+    color: white;
+    padding: 18px 25px;
+}
+
+.history-card .card-body {
+    background: white;
+}
+
+.history-card table {
+    color: #1f2937;
+}
+
+.history-card thead {
+    background: #e9eef5;
+}
+
+.history-card th {
+    color: #172b4d !important;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.history-card td {
+    color: #374151 !important;
+}
+
+.history-card tbody tr {
+    transition: 0.2s;
+}
+
+.history-card tbody tr:hover {
+    background: #f1f5f9;
+}
+
+.url-cell {
+    max-width: 300px;
+    word-break: break-all;
+}
+
+.history-empty-icon {
+    font-size: 60px;
+    color: #94a3b8;
+}
+
+.history-card .badge {
+    font-size: 13px;
+    padding: 8px 12px;
+}
