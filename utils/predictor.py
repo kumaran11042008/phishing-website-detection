@@ -1,5 +1,6 @@
 import joblib
 import pandas as pd
+from pathlib import Path
 
 from utils.feature_extractor import FeatureExtractor
 from utils.risk_engine import RiskEngine
@@ -8,7 +9,10 @@ from utils.risk_engine import RiskEngine
 class Predictor:
 
     def __init__(self):
-        self.model = joblib.load("model/phishing_model.pkl")
+        BASE_DIR = Path(__file__).resolve().parent.parent
+        MODEL_PATH = BASE_DIR / "model" / "phishing_model.pkl"
+
+        self.model = joblib.load(MODEL_PATH)
 
     def predict(self, url):
 
