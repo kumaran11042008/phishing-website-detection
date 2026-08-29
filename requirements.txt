@@ -19,3 +19,4 @@ typing_extensions==4.15.0
 urllib3==2.5.0
 idna==3.10
 python-whois
+tldextract
