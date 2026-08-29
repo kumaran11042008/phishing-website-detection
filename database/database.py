@@ -1,12 +1,54 @@
 import sqlite3
+import os
 from datetime import datetime
 
-DATABASE = "database/scan_history.db"
 
+# ============================================================
+# DATABASE PATH
+# ============================================================
+# Local development:
+#     database/scan_history.db
+#
+# Vercel:
+#     /tmp/scan_history.db
+#
+# Vercel's deployed filesystem is read-only, but /tmp is writable.
+# ============================================================
+
+if os.environ.get("VERCEL"):
+    DATABASE = "/tmp/scan_history.db"
+else:
+    DATABASE = os.path.join(
+        os.path.dirname(__file__),
+        "scan_history.db"
+    )
+
+
+# ============================================================
+# DATABASE CONNECTION
+# ============================================================
+
+def get_connection():
+    """
+    Create and return a SQLite database connection.
+    """
+
+    # Make sure the local database directory exists
+    if not os.environ.get("VERCEL"):
+        os.makedirs(os.path.dirname(DATABASE), exist_ok=True)
+
+    connection = sqlite3.connect(DATABASE)
+
+    return connection
+
+
+# ============================================================
+# CREATE DATABASE
+# ============================================================
 
 def create_database():
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -26,6 +68,10 @@ def create_database():
     connection.close()
 
 
+# ============================================================
+# SAVE SCAN
+# ============================================================
+
 def save_scan(
     url,
     prediction,
@@ -35,7 +81,7 @@ def save_scan(
     scan_time
 ):
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -56,9 +102,13 @@ def save_scan(
     connection.close()
 
 
+# ============================================================
+# GET SCAN HISTORY
+# ============================================================
+
 def get_scan_history():
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     connection.row_factory = sqlite3.Row
 
     cursor = connection.cursor()
@@ -75,13 +125,21 @@ def get_scan_history():
 
     return scans
 
+
+# ============================================================
+# DASHBOARD STATISTICS
+# ============================================================
+
 def get_dashboard_stats():
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     # Total scans
-    cursor.execute("SELECT COUNT(*) FROM scans")
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM scans
+    """)
     total_scans = cursor.fetchone()[0]
 
     # Safe websites
